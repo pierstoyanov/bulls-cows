@@ -2,53 +2,80 @@ from random import seed, randint
 def main():
 
         
-    def create_secret_number(size):
-        """create random number with size"""
+    def create_secret_number():
+        """create random number"""
+        secret_num = []
         seed()
-        secret_number = randint((int('1'*size)), int('9' * size))
-        return secret_number
+        
+        while len(secret_num) < 4:
+            secret_digit = randint((int('0')), int('9'))
+            if secret_digit not in secret_num:
+                secret_num.append(str(secret_digit))
+
+        return secret_num
 
 
-    def bull_cow_return(sec_num, given_num):
+    def bull_cow_return(secret_num, player_num):
         """return (cows, bulls) count"""
-        my, your = str(sec_num), str(given_num)
+        cows = len([digit for digit in player_num if digit in secret_num])
         
         bulls = 0
-        for i in range(len(your)):
-            if your[i] == my[i]:
-                bulls += 1
+        for i in range(len(player_num)):
+            if player_num[i] == secret_num[i]:
+                    bulls += 1
 
-        cows = len([x for x in your if x in my])
-        
-        return cows, bulls
+        return bulls, cows
 
 
-    def play(tries = 7, size = 4):
-        secret_num = create_secret_number(size)
+    def get_player_num():
+        player_num = list()
+
+        while len(player_num) < 4:
+            try:
+                player_input = input()[0]
+                if player_input.isdigit() and \
+                    player_input not in player_num:
+                    player_num.append(player_input)
+            except (ValueError, IndexError):
+                continue
+        return player_num
+
+    def another_game(state):
+            
+        if not state:
+            play_again = input('Sorry, you ran out of tries! Would you like to play again?\n')
+        else:
+            play_again = input('Great! Would you like to play again?\n')
+     
+        if play_again in ['yes', 'y', 'Y', 'YES', 'Yes']:
+            return play()
+        else:
+            return print('OK, Thank you for playing.')   
+
+
+    def play(tries = 7):
+        won = False
+        secret_num = create_secret_number()
         print(secret_num)
 
         for i in range(tries):
-            won = False
-            player_input = input(f'Try 1 of {tries + 1 - i}\n')[0:size]
+            print(f'Try {i+1} of {tries}')
 
-            x = bull_cow_return(secret_num, player_input)
-            if x[1] == size:
+            player_num = get_player_num()
+            bulls, cows = bull_cow_return(secret_num, player_num)
+
+            if bulls == 4:
                 won = True
-                result = f'YOU WON!\n{player_input} is the secrest number {secret_num}.\n'
-                print(result)
+                result = f'YOU WON!\n{player_num} is the secrest number {secret_num}.\n'
                 break
             else:
-                result = f'Cows: {x[0]}, Bulls: {x[1]}'
-                print(result)
-
-        if not won:
-            play_again = input('Sorry, you ran out of tries! Would you like to play again?\n')
-            if play_again in ['yes', 'y', 'Y', 'YES', 'Yes']:
-                play()
-            else:
-                return print('OK, Thank you for playing.')
-
-    play()
+                print(f'Cows: {cows}, Bulls: {bulls}')
+        
+        print(result)
+        return won
+    
+    x = play()   
+    another_game(x)
 
 if __name__ == '__main__':
     main()
