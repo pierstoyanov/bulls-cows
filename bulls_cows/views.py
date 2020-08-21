@@ -2,32 +2,35 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse
-import re
-from datetime import datetime
-
+from .models import UserInputNumber
+from .game import *
 
 def home(request):
+    
+    return render(request, 'bulls_cows/home.html')
 
-    return HttpResponse("Hello, Django!")
 
-def hello_there(request, name):
-    now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X")
-    match_object = re.match(r'[A-Za-z]', name)
+def play(request):
 
-    if match_object:
-        clean_name = match_object.group(0)
-    else:
-        clean_name = "Friend"
-        
-    content = "Hello there, " + clean_name + "! It's " + formatted_now
-    return HttpResponse(content)
+    form = UserInputNumber()
 
-    return render(
-        request,
-        'bulls_cows/hello_there.html',
-        {
-            'name': name,
-            'date': datetime.now()
-        }
-    )
+
+
+    # user_digits = UserInputNumber
+    
+    # if request.method == 'POST':
+    #     form = UserInputNumber(request.POST)
+    #     print(form)
+
+
+    # play_game()
+    # count = []
+    return render(request, 'bulls_cows/play.html', {'form':form})
+
+
+# def play_this(request):
+#     try:
+#         game.main()
+#         return render(request, 'bulls_cows/game.html')
+#     except:
+#         pass

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'bulls_cows/site.css' %}"/>
+    </head>
+
+    <body>
+        <div class="navbar">
+            <a href="{% url 'home' %}" class="navbar-brand">Home</a>
+            <a href="{% url 'play' %}" class="navbar-item">Play Bulls and Cows</a>
+        </div>
+
+
+        <div class="body-content">
+            {% block content %}
+            {% endblock %}
+            <hr/>
+
+        </div>
+    <footer>
+        <p>This is the homepage 2077</p>
+    </footer>
+
+    </body>
+
+
+</html>
