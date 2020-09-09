@@ -1,54 +1,64 @@
 .message {
     font-weight: 600;
+    font-size: 2em;
     color: green;
+    text-align: center;
 }
 
 .navbar {
-    background-color: darkslategray;
+    margin: 3% 20% 2%;
+    border-radius: 20px;
+    background-color: lightcyan;
     font-size: 1em;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: green;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', 'Arial', 'sans-serif';
+    /*color: white;*/
     padding: 8px 5px 8px 5px;
-}
 
-.navbar a {
-    text-decoration: none;
-    color: inherit;
 }
 
 .navbar-brand {
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: 600;
+    color: black;
 }
 
 .navbar-item {
     font-variant: small-caps;
     margin-left: 30px;
+    color: black;
 }
 
 .body-content {
-    padding: 5px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0% 20% 0%;
+    padding: 10px;
+    font-family:'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
 }
 
+.input-number {
+    margin: 0 auto;
+    text-align: center;
+    border: darkred;
+    border-radius: 5px;
+    padding: 10px;
+    white-space: nowrap;
 
+}
 
+.digit {
+    text-align: center;
+    letter-spacing: 2em;
+    border: none;
+    font-size: 2em;
+}
 
-.input {
+.digit:focus-within {
   border: none;
-  width: 10.5ch;
-  background:
-    repeating-linear-gradient(90deg,
-        dimgrey 0,
-        dimgrey 1ch,
-        transparent 0,
-        transparent 1.5ch)
-      0 100%/100% 2px no-repeat;
-  color: dimgrey;
-  font: 5ch consolas, monospace;
-  letter-spacing: .5ch;
-}
-input:focus {
-  outline: none;
+  border: 0px;
   color: dodgerblue;
+}
+
+.send-button {
+    background: lightgreen;
+    font-weight: bold;
+    border-radius: 10px;
 }

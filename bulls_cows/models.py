@@ -1,12 +1,18 @@
 from django.db import models
-from random import seed, randint
 from django import forms
+from random import seed, randint
 
 
-class SecretNumber:
+# Here is the business end of the Bull-Cow logic
+
+class PlayMaster:
+    def __init__(self):
+        pass
+        # self.secret_num = SecretNumber.create_secret_number()
+
     @staticmethod
     def create_secret_number():
-        """create random number"""
+        """create random 4 dig number in a list"""
         secret_num = []
         seed()
 
@@ -14,48 +20,49 @@ class SecretNumber:
             secret_digit = randint((int('0')), int('9'))
             if secret_digit not in secret_num:
                 secret_num.append(str(secret_digit))
-        return secret_num
+        result = ''.join(str(x) for x in secret_num)
+        return result
 
-
-
-class PlayGame:
-    def __init__(self):
-        self.won = False
-        self.secret_num = SecretNumber.create_secret_number()
-
-
-    def bull_cow_return(self, player_num):
+    @staticmethod
+    def bull_cow_return(secret_num, player_num):
         """return (cows, bulls) count"""
-        cows = len([digit for digit in player_num if digit in self.secret_num])
+        cows = len([digit for digit in player_num if digit in secret_num])
         bulls = 0
-
         for i in range(len(player_num)):
-            if player_num[i] == self.secret_num[i]:
+            if player_num[i] == secret_num[i]:
                 bulls += 1
 
         return bulls, cows
 
+    # TODO
+    # def play(self, player_num):
+    #     bulls, cows = self.bull_cow_return(self.secret_num, player_num)
+    #     if bulls == 4:
+    #         self.won = True
+    #         result = f'YOU WON!\n{player_num} is the secret number {self.secret_num}.\n'
+    #     else:
+    #         result = f'Cows: {cows}, Bulls: {bulls}'
+    #     return result
 
-    def play_game(self, player_num):
-     #TODO
-        for i in range(tries):
-            count = f'Try {i + 1} of {tries}'
 
-            player_num = get_player_num()
-            bulls, cows = bull_cow_return(secret_num, player_num)
+# Models for the DB.
 
-            if bulls == 4:
-                won = True
-                result = f'YOU WON!\n{player_num} is the secrest number {secret_num}.\n'
-                break
-            else:
-                print(f'Cows: {cows}, Bulls: {bulls}')
+class ScoreBoard(models.Model):
+    user_id = models.CharField(max_length=50)
+    won = models.BooleanField(default=False)
+    secret_num = models.PositiveIntegerField()
 
-        print(result)
-        return (won)
+    def __str__(self):
+        """A string representation of the model."""
+        return f"id: {self.user_id} secret: {self.secret_num} won: {self.won}"
 
-class UserInputNumber(forms.Form):
-    digitpad = forms.DecimalField(label='digits')
-    # digit_two = forms.DecimalField(label='d_two')
-    # digit_three = forms.DecimalField(label='d_three')
-    # digit_four = forms.DecimalField(label='d_four')
+
+class ScoreCard(models.Model):
+    user_num = models.CharField(max_length=4)
+    bulls = models.CharField(max_length=1)
+    cows = models.CharField(max_length=1)
+    score_board = models.ForeignKey(to=ScoreBoard, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """A string representation of the model."""
+        return f"user: {self.user_num} bulls: {self.bulls} cows: {self.cows}"
