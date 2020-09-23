@@ -46,9 +46,16 @@ class PlayMaster:
 
 
 # Models for the DB.
+#todo add null=True
+
+class Player(models.Model):
+    player_id = models.CharField(max_length=250)
+    player_nickname = models.TextField(max_length=50, default='AwesomeUser')
+    
 
 class ScoreBoard(models.Model):
-    user_id = models.CharField(max_length=50)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+
     won = models.BooleanField(default=False)
     secret_num = models.PositiveIntegerField()
 
@@ -58,10 +65,11 @@ class ScoreBoard(models.Model):
 
 
 class ScoreCard(models.Model):
+    score_board = models.ForeignKey(ScoreBoard, on_delete=models.CASCADE)
+
     user_num = models.CharField(max_length=4)
     bulls = models.CharField(max_length=1)
     cows = models.CharField(max_length=1)
-    score_board = models.ForeignKey(to=ScoreBoard, on_delete=models.CASCADE)
 
     def __str__(self):
         """A string representation of the model."""

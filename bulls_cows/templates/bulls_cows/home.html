@@ -9,6 +9,15 @@
     <body>
         <div class="message">Welcome to Bulls and Cows</div>
 
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+
+
         <div class="navbar">
             <a href="{% url 'home' %}" class="navbar-brand">Home</a>
             <a href="{% url 'play' %}" class="navbar-item">Bulls and Cows</a>

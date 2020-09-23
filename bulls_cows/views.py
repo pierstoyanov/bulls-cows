@@ -1,22 +1,38 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
+from django.contrib import messages
+
 from bulls_cows.models import PlayMaster
-from bulls_cows.models import ScoreCard, ScoreBoard
+from bulls_cows.models import ScoreCard, ScoreBoard, Player
 # Create your views here.
 
 
 
 
 def home(request):
+    #todo - make better cookie message
+    request.session.set_test_cookie()
+    if request.session.test_cookie_worked():
+        request.session.delete_test_cookie()
+        messages.success(request, 'Cokes are turned ON')
+    else:
+        request.session.set_test_cookie()
+        messages.error(request, 'Please enable cookie')
+
     return render(request, 'bulls_cows/home.html')
 
 
-Score_card = ScoreCard()
-
+player = Player()
 def play(request):
+    #TODO Test if browser uses cookies
 
+
+    #get or create user from session id
+
+    player, created = Player.objects.get_or_create(player_id = request.session.session_key)
 
     try:
+
         user_number = request.POST['user-number']
         Score_card.user_num = user_number
         bulls_cows_count = PlayMaster.bull_cow_return(Score_card.secret_num, Score_card.user_num)
