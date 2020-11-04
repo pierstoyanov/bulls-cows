@@ -1,1 +1,1 @@
-#Bulls and Cows (Mastermind) running as a webapp with Python/Django.
+#The game Bulls and Cows (Mastermind) as a Python/Django webapp.
