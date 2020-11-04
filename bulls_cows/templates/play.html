@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Play</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'site.css' %}" />
+</head>
+<body>
+    <div class="title">Welcome to Bulls and Cows</div>
+
+    {% include "common/navbar.html" %}
+
+
+
+    {{ id }}
+
+    <form method="POST" class="input-number" action="" autocomplete="off">
+
+        <input class="digit" maxlength="4" name="user-number">
+        {% csrf_token %}
+        <input type="submit" class="send-button">
+    </form>
+
+
+    {% include "common/cookie_block.html" %}
+    <hr/>
+
+    {% include 'common/footer.html'%}
+
+</body>
+</html>

@@ -1,18 +1,37 @@
-.message {
-    font-weight: 600;
+body {
+    display: flex;
+    margin: 0% 15% 0%;
+    flex-direction: column;
+    /* background-color: red; */
+}
+
+
+footer {
+    font-style: italic;
+    margin: auto;
+    align-self: center;
+}
+
+
+.title {
+    font-weight: 500;
     font-size: 2em;
     color: green;
-    text-align: center;
+    align-self: center;
+    padding: 1.5% 0%;
+
 }
 
 .navbar {
-    margin: 3% 20% 2%;
+    display: flex;
+    /* margin: 3% 20% 3%; */
     border-radius: 20px;
     background-color: lightcyan;
     font-size: 1em;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', 'Arial', 'sans-serif';
-    /*color: white;*/
-    padding: 8px 5px 8px 5px;
+    padding: 1% 1% 1%;
+    align-content: flex-start;
+    flex-wrap: wrap;
 
 }
 
@@ -20,16 +39,20 @@
     font-size: 1.4em;
     font-weight: 600;
     color: black;
+    margin: auto;
 }
 
 .navbar-item {
     font-variant: small-caps;
-    margin-left: 30px;
+    /* margin-left: 5%; */
     color: black;
+    margin: auto;
 }
 
+
+
 .body-content {
-        margin: 0% 20% 0%;
+    margin: 0% 20% 0%;
     padding: 10px;
     font-family:'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
 }
