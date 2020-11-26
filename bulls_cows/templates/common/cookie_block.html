@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>cookie check</title>
-
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'cookie.css' %}" />
-</head>
-<body>
-    <div class="cookies_box">
-        <div class="cookies_box cookies_box-msg">Cookes:</div>
-        {% if cookie_state == True %}
-            <div class="cookies_box cookies_box-on">&nbsp;ON</div>
-        {% else %}
-            <div class="cookies_box cookies_box-off">&nbsp;OFF</div>
-        {% endif %}
-    </div>
-</body>
-</html>
+<div class="cookies_box">
+    <div class="cookies_box cookies_box-msg">Cookies are:</div>
+    {% if cookie_state == True %}
+        <div class="cookies_box cookies_box-on">&nbsp;ON</div>
+    {% else %}
+        <div class="cookies_box cookies_box-off">&nbsp;OFF</div>
+    {% endif %}
+</div>

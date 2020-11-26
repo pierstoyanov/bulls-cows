@@ -1,76 +1,72 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.contrib import messages
+from django.views import View
 
 from bulls_cows.common.play_master import PlayMaster
 from bulls_cows.models import ScoreCard, ScoreBoard, Player
+from bulls_cows.forms.profile import PlayerForm
+from bulls_cows.forms.number_form import NumberForm
+
+from bulls_cows.common.functionality import test_cooke
+
 
 # from bulls_cows.common import player_session
 
-# Create your views here.
+# This view handles the user selection and play logic.
+# There are two forms - player name and player number input.
 
+class Play(View):
 
-def play(request):
+    def get(self, request):
+        #check the cookies state
+        cookie_state = test_cooke(request)
 
-    if request.session.test_cookie_worked():
-        request.session.delete_test_cookie()
-        cookie_state = True
-    else:
-        cookie_state = False
+        #get the player token from cookies
+        player_token = request.session.get('player_token')
 
+        if player_token:
+            #get or create player from DB
+            current_player = Player.objects.get(player_id=player_token)
+        else:
+            # If no player token is present in cookies - create player and token
+            current_player = Player.objects.create()
+            request.session['player_token'] = str(current_player.player_id)
 
-    if request.session.get('player_token'):
-        current_player = Player.objects.get_or_create(player_id=request.session['player_token'])
-    else:
-        
-        current_player = Player.objects.create()
-        request.session['player_token'] = getattr(current_player,'player_id')
+        form_player_name = PlayerForm(
+            instance=current_player,
+            initial={'player_name': current_player.player_name})
 
-    print(current_player)
-
-    if request.method == 'GET':
+        form_number_input = NumberForm()
 
         context = {
-            # "id": getattr(current_player,'player_name'),
-            "cookie_state": cookie_state,
+            'id': current_player.player_name,
+            'cookie_state': cookie_state,
+            'form_player_name': form_player_name,
+            'form_number_input': form_number_input
         }
-
-
-        #stage test cookie
-        request.session.set_test_cookie()
 
 
         return render(request, 'play.html', context) 
 
-    else:
+    def post(self, request):
 
-        context = {
-            "id": current_player['player_name'],
-            "cookie_state": cookie_state
-        }
-        
-        
-        #stage test cookie
-        request.session.set_test_cookie()
+        # check the cookies state
+        cookie_state = test_cooke(request)
 
-        return render(request, 'play.html', context)
+        player_token = request.session.get('player_token')
+        current_player = Player.objects.get(player_id=player_token)
 
-    #get or create user from session id
 
-    # player, created = Player.objects.get_or_create(player_id = request.session.session_key)
+        if 'player_name' in request.POST:      
+            form = PlayerForm(request.POST, instance=current_player)
+            if form.is_valid():
+                form.save()
+                
 
-    # try:
-
-    #     user_number = request.POST['user-number']
-    #     Score_card.user_num = user_number
-    #     bulls_cows_count = PlayMaster.bull_cow_return(Score_card.secret_num, Score_card.user_num)
-    #     print(f"User num = {Score_card.user_num} \nSecret num = {Score_card.secret_num}")
-
-    #     Score_card.bulls = bulls_cows_count[0]
-    #     Score_card.cows = bulls_cows_count[1]
-    #     print(Score_card.bulls, Score_card.cows)
-    #     Score_card.save()
-    #     sc_2=ScoreCard()
-
-    # except KeyError:
-    #     pass
+        elif 'digits_input' in request.POST:
+            form = NumberForm(request.POST)
+            if form.is_valid():
+                request.session['player_number'] = request.POST.get('digits_input')
+                return HttpResponseRedirect(request.path_info) 

@@ -13,6 +13,29 @@ footer {
 }
 
 
+hr {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+form {
+    display: flex;
+    align-self: center;
+    align-content: flex-start;
+    padding: 1%;
+    
+}
+
+
+label {
+    display: flex;
+    color: indigo;
+    background-color: lightcoral;
+    font-style: italic;
+}
+
+
 .title {
     font-weight: 500;
     font-size: 2em;
@@ -50,8 +73,11 @@ footer {
 }
 
 
-
 .body-content {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
     margin: 0% 20% 0%;
     padding: 10px;
     font-family:'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
@@ -85,3 +111,4 @@ footer {
     font-weight: bold;
     border-radius: 10px;
 }
+

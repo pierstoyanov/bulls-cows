@@ -1,35 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block content %}
 
-    <title>Play</title>
-
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'site.css' %}" />
-</head>
-<body>
-    <div class="title">Welcome to Bulls and Cows</div>
-
-    {% include "common/navbar.html" %}
-
-
-
-    {{ id }}
-
-    <form method="POST" class="input-number" action="" autocomplete="off">
-
-        <input class="digit" maxlength="4" name="user-number">
+    <form method="POST">
+        <input type="hidden" name="player_name" value="players_name">
         {% csrf_token %}
-        <input type="submit" class="send-button">
+        {{ form_player_name }}
+        <input type="submit" class="send-button" value="Change name"/>
     </form>
 
+    
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="digits_input" value="user_guess">
+        {{ form_number_input }}
+        <!-- <input type="number"> -->
+        <input type="submit" class="send-button" value="Play">
+    </form>
 
-    {% include "common/cookie_block.html" %}
-    <hr/>
-
-    {% include 'common/footer.html'%}
-
-</body>
-</html>
+{% endblock %}

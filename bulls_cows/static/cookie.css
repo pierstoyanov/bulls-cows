@@ -1,6 +1,7 @@
 .cookies_box {
     display: flex;
     margin: auto;
+    padding-top: 5%;
 }
 
 .cookies_box-msg{

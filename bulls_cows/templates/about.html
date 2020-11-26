@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block content %}
 
-    <title>{% block title %}about{% endblock %}</title>
+    <div id='about'>
+    Bulls and Cows, also known as Mastermind is a logical guessing game.
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'site.css' %}"/>
-</head>
-<body>
-    <div class="title">Welcome to Bulls and Cows</div>
-
-    {% include 'common/navbar.html' %}
-    
-
-    <hr/>
-    {% include 'common/footer.html'%}
-    
-</body>
-</html>
+    There is a hidden number with four digits.
+    </div>
+{% endblock %}
