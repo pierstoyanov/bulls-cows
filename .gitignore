@@ -10,5 +10,5 @@ venv.bak/
 
 __pycache__/
 .mypy_cache
-.web_project/local_settings.py
 
+.web_project/local_settings.py
