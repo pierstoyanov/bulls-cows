@@ -126,4 +126,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
 
-from web_project.local_settings import *
+from web_project.local_settings.local_settings import *
