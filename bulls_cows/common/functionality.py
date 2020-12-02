@@ -1,7 +1,12 @@
+from bulls_cows.models import Player
+
+
 def test_cooke(request):
-    #reload test cookie
-    request.session.set_test_cookie()
-    
+    """
+    Return the result of the last test cookie.
+    returns cookie_state = bool
+    """
+   
     if request.session.test_cookie_worked():
         request.session.delete_test_cookie()
         cookie_state = True
@@ -11,12 +16,22 @@ def test_cooke(request):
     return cookie_state
 
 
-# def get_current_player(request):
-#     if request.session.get('player_token'):
-#         current_player = Player.objects.get_or_create(player_id=request.session['player_token'])
-#     else:
-#         current_player = Player()
-#         current_player.save()
-#         request.session['player_token'] = str(current_player.player_id)
+def current_player_get_or_create(request):
+    """
+    Get the cureent player, based on cookie var 'player_id'.
+    If not found, make new player and set the cookie variable.
+    retuns Player object.
+    """
+    
+    #get the player token from cookies
+    player_token = request.session.get('player_token')
 
-#     return current_player
+    #if the token exists search the player from DB, else
+    # If no player token is present in cookies - create player and set token in session 
+    if player_token:
+        current_player = Player.objects.get(player_id=player_token)
+    else:
+        current_player = Player.objects.create()
+        request.session['player_token'] = str(current_player.player_id)
+   
+    return current_player
